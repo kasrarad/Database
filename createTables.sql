@@ -33,15 +33,33 @@ CREATE TABLE Book(
   title varchar(20),
   author varchar(20),
   subject varchar(20),
-  cost_price float,
-  selling_price float,
-  quantity_on_hand int,
-  ytd_sold int,
   published_by int,
-  supplied_by int,
   PRIMARY KEY (isbn),
-  FOREIGN KEY (published_by) REFERENCES Publisher(publisher_number) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (supplied_by) REFERENCES Branch(branch_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (published_by) REFERENCES Publisher(publisher_number) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IventoryBookstore(
+	store_id int NOT NULL,
+	isbn int NOT NULL,
+	cost_price float,
+	selling_price float,
+	quantity int,
+	ytd_sold int,
+	PRIMARY KEY (store_id,isbn),
+    FOREIGN KEY (isbn) REFERENCES Book (isbn) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IventoryPublisher(
+	publisher_number int NOT NULL,
+    branch_id int NOT NULL,
+	isbn int NOT NULL,
+	selling_price float,
+	quantity int,
+	ytd_sold int,
+	PRIMARY KEY (publisher_number,branch_id,isbn),
+    FOREIGN KEY (isbn) REFERENCES Book (isbn) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (publisher_number) REFERENCES Publisher(publisher_number) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (branch_id) REFERENCES Branch (branch_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE BookOrder (
