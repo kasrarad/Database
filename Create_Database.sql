@@ -70,7 +70,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Books` (
   `ISBN` VARCHAR(20) NOT NULL,
-  `inventory_id` INT NOT NULL,
+  -- `inventory_id` INT NOT NULL,
   `publisher_number` INT NOT NULL,
   `title` VARCHAR(255) NOT NULL,
   `cost_price` DECIMAL(5,2) NOT NULL,
@@ -114,23 +114,45 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Book_Author`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Book_Author` (
-  `Books_ISBN` VARCHAR(20) NOT NULL,
-  `author_id` INT NOT NULL,
-  PRIMARY KEY (`Books_ISBN`, `author_id`),
-  INDEX `fk_Book_Author_Books1_idx` (`Books_ISBN` ASC) VISIBLE,
-  INDEX `fk_Book_Author_Authors1_idx` (`author_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Book_Author_Books1`
+CREATE TABLE IF NOT EXISTS `Books` (
+  `ISBN` VARCHAR(20) NOT NULL,
+  -- `inventory_id` INT NOT NULL,
+  `publisher_number` INT NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `cost_price` DECIMAL(5,2) NOT NULL,
+  `selling_price` DECIMAL(5,2) NOT NULL,
+  -- INDEX `fk_Books_Intentory1_idx` (`inventory_id` ASC) VISIBLE,
+  PRIMARY KEY (`ISBN`),
+  INDEX `fk_Books_Publishers1_idx` (`publisher_number` ASC) VISIBLE,
+  -- CONSTRAINT `fk_Books_Intentory1`
+  --  FOREIGN KEY (`inventory_id`)
+  --  REFERENCES `Inventory` (`inventory_id`)
+  --  ON DELETE NO ACTION
+  --  ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Books_Publishers1`
+    FOREIGN KEY (`publisher_number`)
+    REFERENCES `Publishers` (`publisher_number`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `arrived_books` (
+	`Books_ISBN` varchar(20) not null,
+	`inventory_id` INT NOT NULL,
+     INDEX `fk_Books_Inventory1_idx` (`inventory_id` ASC) VISIBLE,
+	 CONSTRAINT `fk_Books_Inventory1`
+	  FOREIGN KEY (`inventory_id`)
+	  REFERENCES `Inventory` (`inventory_id`)
+	  ON DELETE NO ACTION
+	  ON UPDATE NO ACTION,
+	CONSTRAINT `fk_arrived_book`
     FOREIGN KEY (`Books_ISBN`)
     REFERENCES `Books` (`ISBN`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Book_Author_Authors1`
-    FOREIGN KEY (`author_id`)
-    REFERENCES `Authors` (`author_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    primary key (Books_ISBN,inventory_id)
+    
+);
 
 
 -- -----------------------------------------------------
