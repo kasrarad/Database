@@ -11,13 +11,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema store
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `store` DEFAULT CHARACTER SET utf8 ;
-USE `store` ;
+-- CREATE SCHEMA IF NOT EXISTS `store` DEFAULT CHARACTER SET utf8 ;
+USE eyc353_1 ;
 
 -- -----------------------------------------------------
 -- Table `store`.`Bookstore`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Bookstore` (
+CREATE TABLE IF NOT EXISTS `Bookstore` (
   `bookstore_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   `telephone` INT NOT NULL,
@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Intentory`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Intentory` (
+CREATE TABLE IF NOT EXISTS `Inventory` (
   `inventory_id` INT NOT NULL AUTO_INCREMENT,
   `bookstore_id` INT NOT NULL,
   `ISBN` VARCHAR(20) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `store`.`Intentory` (
   PRIMARY KEY (`inventory_id`),
   CONSTRAINT `fk_Intentory_Bookstore`
     FOREIGN KEY (`bookstore_id`)
-    REFERENCES `store`.`Bookstore` (`bookstore_id`)
+    REFERENCES `Bookstore` (`bookstore_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -51,7 +51,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Publishers`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Publishers` (
+CREATE TABLE IF NOT EXISTS `Publishers` (
   `publisher_number` INT NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `telephone` INT NOT NULL,
@@ -68,7 +68,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Books`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Books` (
+CREATE TABLE IF NOT EXISTS `Books` (
   `ISBN` VARCHAR(20) NOT NULL,
   `inventory_id` INT NOT NULL,
   `publisher_number` INT NOT NULL,
@@ -80,12 +80,12 @@ CREATE TABLE IF NOT EXISTS `store`.`Books` (
   INDEX `fk_Books_Publishers1_idx` (`publisher_number` ASC) VISIBLE,
   CONSTRAINT `fk_Books_Intentory1`
     FOREIGN KEY (`inventory_id`)
-    REFERENCES `store`.`Intentory` (`inventory_id`)
+    REFERENCES `Inventory` (`inventory_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Books_Publishers1`
     FOREIGN KEY (`publisher_number`)
-    REFERENCES `store`.`Publishers` (`publisher_number`)
+    REFERENCES `Publishers` (`publisher_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -94,7 +94,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Authors`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Authors` (
+CREATE TABLE IF NOT EXISTS `Authors` (
   `author_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`author_id`))
@@ -104,7 +104,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Subjects`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Subjects` (
+CREATE TABLE IF NOT EXISTS `Subjects` (
   `subject_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`subject_id`))
@@ -114,7 +114,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Book_Author`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Book_Author` (
+CREATE TABLE IF NOT EXISTS `Book_Author` (
   `Books_ISBN` VARCHAR(20) NOT NULL,
   `author_id` INT NOT NULL,
   PRIMARY KEY (`Books_ISBN`, `author_id`),
@@ -122,12 +122,12 @@ CREATE TABLE IF NOT EXISTS `store`.`Book_Author` (
   INDEX `fk_Book_Author_Authors1_idx` (`author_id` ASC) VISIBLE,
   CONSTRAINT `fk_Book_Author_Books1`
     FOREIGN KEY (`Books_ISBN`)
-    REFERENCES `store`.`Books` (`ISBN`)
+    REFERENCES `Books` (`ISBN`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Book_Author_Authors1`
     FOREIGN KEY (`author_id`)
-    REFERENCES `store`.`Authors` (`author_id`)
+    REFERENCES `Authors` (`author_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -136,7 +136,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Book_Subject`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Book_Subject` (
+CREATE TABLE IF NOT EXISTS `Book_Subject` (
   `Books_ISBN` VARCHAR(20) NOT NULL,
   `subject_id` INT NOT NULL,
   PRIMARY KEY (`Books_ISBN`, `subject_id`),
@@ -144,12 +144,12 @@ CREATE TABLE IF NOT EXISTS `store`.`Book_Subject` (
   INDEX `fk_Book_Subject_Subjects1_idx` (`subject_id` ASC) VISIBLE,
   CONSTRAINT `fk_Book_Subject_Books1`
     FOREIGN KEY (`Books_ISBN`)
-    REFERENCES `store`.`Books` (`ISBN`)
+    REFERENCES `Books` (`ISBN`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Book_Subject_Subjects1`
     FOREIGN KEY (`subject_id`)
-    REFERENCES `store`.`Subjects` (`subject_id`)
+    REFERENCES `Subjects` (`subject_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -158,7 +158,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Customers`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Customers` (
+CREATE TABLE IF NOT EXISTS `Customers` (
   `customer_id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NOT NULL,
@@ -176,9 +176,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Orders` (
+CREATE TABLE IF NOT EXISTS `Orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
-  `customer_id` INT NULL,
+  `customer_id` INT default NULL,
   `bookstore_id` INT NULL,
   `ISBN` VARCHAR(20) NOT NULL,
   `quantity` INT NOT NULL,
@@ -190,12 +190,12 @@ CREATE TABLE IF NOT EXISTS `store`.`Orders` (
   INDEX `fk_Orders_Bookstore1_idx` (`bookstore_id` ASC) VISIBLE,
   CONSTRAINT `fk_Orders_Customers1`
     FOREIGN KEY (`customer_id`)
-    REFERENCES `store`.`Customers` (`customer_id`)
+    REFERENCES `Customers` (`customer_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Orders_Bookstore1`
     FOREIGN KEY (`bookstore_id`)
-    REFERENCES `store`.`Bookstore` (`bookstore_id`)
+    REFERENCES `Bookstore` (`bookstore_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -204,7 +204,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Order_Book`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Order_Book` (
+CREATE TABLE IF NOT EXISTS `Order_Book` (
   `order_id` INT NOT NULL,
   `ISBN` VARCHAR(20) NOT NULL,
   `is_sold` TINYINT NOT NULL,
@@ -215,12 +215,12 @@ CREATE TABLE IF NOT EXISTS `store`.`Order_Book` (
   INDEX `fk_Purchase_Book_Books1_idx` (`ISBN` ASC) VISIBLE,
   CONSTRAINT `fk_Order_Book_Orders1`
     FOREIGN KEY (`order_id`)
-    REFERENCES `store`.`Orders` (`order_id`)
+    REFERENCES `Orders` (`order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Purchase_Book_Books1`
     FOREIGN KEY (`ISBN`)
-    REFERENCES `store`.`Books` (`ISBN`)
+    REFERENCES `Books` (`ISBN`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -229,7 +229,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Bookstore_Publisher_Order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Bookstore_Publisher_Order` (
+CREATE TABLE IF NOT EXISTS `Bookstore_Publisher_Order` (
   `Publishers_publisher_number` INT NOT NULL,
   `Bookstore_bookstore_id` INT NOT NULL,
   `order_id` INT NOT NULL,
@@ -239,12 +239,12 @@ CREATE TABLE IF NOT EXISTS `store`.`Bookstore_Publisher_Order` (
   PRIMARY KEY (`Publishers_publisher_number`, `Bookstore_bookstore_id`),
   CONSTRAINT `fk_Bookstore_Publisher_Order_Publishers1`
     FOREIGN KEY (`Publishers_publisher_number`)
-    REFERENCES `store`.`Publishers` (`publisher_number`)
+    REFERENCES `Publishers` (`publisher_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Bookstore_Publisher_Order_Bookstore1`
     FOREIGN KEY (`Bookstore_bookstore_id`)
-    REFERENCES `store`.`Bookstore` (`bookstore_id`)
+    REFERENCES `Bookstore` (`bookstore_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -253,14 +253,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Special_Order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Special_Order` (
-  `order_id` INT NULL,
+CREATE TABLE IF NOT EXISTS `Special_Order` (
+  `order_id` INT NOT NULL,
   `customer_id` VARCHAR(45) NOT NULL,
   INDEX `fk_Special_Order_Orders1_idx` (`order_id` ASC) VISIBLE,
   PRIMARY KEY (`order_id`),
   CONSTRAINT `fk_Special_Order_Orders1`
     FOREIGN KEY (`order_id`)
-    REFERENCES `store`.`Orders` (`order_id`)
+    REFERENCES `Orders` (`order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -269,7 +269,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Branches`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Branches` (
+CREATE TABLE IF NOT EXISTS `Branches` (
   `branch_id` INT NOT NULL AUTO_INCREMENT,
   `publisher_number` INT NOT NULL,
   `name` VARCHAR(50) NOT NULL,
@@ -281,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `store`.`Branches` (
   INDEX `fk_Branches_Publishers1_idx` (`publisher_number` ASC) VISIBLE,
   CONSTRAINT `fk_Branches_Publishers1`
     FOREIGN KEY (`publisher_number`)
-    REFERENCES `store`.`Publishers` (`publisher_number`)
+    REFERENCES `Publishers` (`publisher_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -290,7 +290,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `store`.`Branch_Book_Quantity`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `store`.`Branch_Book_Quantity` (
+CREATE TABLE IF NOT EXISTS `Branch_Book_Quantity` (
   `branch_id` INT NOT NULL,
   `ISBN` VARCHAR(20) NOT NULL,
   `quantity` INT NOT NULL,
@@ -298,12 +298,12 @@ CREATE TABLE IF NOT EXISTS `store`.`Branch_Book_Quantity` (
   PRIMARY KEY (`ISBN`, `branch_id`),
   CONSTRAINT `fk_Branch_Book_Quantity_Branches1`
     FOREIGN KEY (`branch_id`)
-    REFERENCES `store`.`Branches` (`branch_id`)
+    REFERENCES `Branches` (`branch_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Branch_Book_Quantity_Books1`
     FOREIGN KEY (`ISBN`)
-    REFERENCES `store`.`Books` (`ISBN`)
+    REFERENCES `Books` (`ISBN`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
