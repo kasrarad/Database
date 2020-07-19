@@ -18,7 +18,7 @@ USE eyc353_1 ;
 -- Table `store`.`Bookstore`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Bookstore` (
-  `bookstore_id` INT NOT NULL AUTO_INCREMENT,
+  `bookstore_id` INT NOT NULL UNIQUE AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   `telephone` INT NOT NULL,
   `email_address` VARCHAR(255) NOT NULL,
@@ -329,6 +329,7 @@ CREATE TABLE IF NOT EXISTS `Branch_Book_Quantity` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

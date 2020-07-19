@@ -114,6 +114,46 @@
 
 -- **************************************************************
 
+-- insert Branches 
+-- insert into Branches(branch_id,publisher_number, name, address, rep_name, rep_email, is_head_office)
+--  values (1,1,"Konami", "102 Greenview St. Winston Salem, NC 27103", "Hideo Kojima", "h_kojima@gmail.com", 0),
+--    (2,5,"EA", "1 Arrowhead Ave. Bangor, ME 04401", "John Madden", "jm@ea.com", 0),
+--    (3,3,"Funimation", "8059 Prince St. Great Falls, MT 59404", "Janet Jackson", "head_chief_jackson@funimation.com", 1),
+--    (4,9,"Penguin Killers", "85 Poplar St. Noblesville, IN 46060", "Michael Myers", "totally_not_a_stalker@penguinkillers.uk", 0),
+--    (5,10,"Fake Acid Pools", "8840 West Dogwood St. Valdosta, GA 31601", "Rick Sanchez", "the_rick@plumbus.org", 1),
+--    (6,7,"Nacho Libre", "288 Shipley Street Vienna, VA 22180", "Jack Black", "blackjack76@gmail.com", 0),
+--    (7,2,"Cow Chop", "35 North Court Torrance, CA 90505", "James Wilson", "uberhaxornova@hotmail.com", 0),
+--    (8,4,"Flex Tape", "159 Cardinal St. Garfield, NJ 07026", "Phil Swift", "alottadamage@flex_seal.com", 1),
+--    (9,8,"I love trains", "9022 Iroquois St. Chapel Hill, NC 27516", "Sheldon Cooper", "perfect_being@msn.com", 1),
+--    (10,6,"Speedwagon Inc.", "8232 Honey Creek St. Cedar Falls, IA 50613", "Robert E. O. Speedwagon", "checkered_hat@speedwagon.us", 1);
+-- **************************************************************
+
+-- insert Branch_Book_Quantity 
+-- insert into Branch_Book_Quantity(branch_id,ISBN,quantity)
+--  values (1,"0-1188-0050-7",10),
+--    (1,"0-4809-1234-3",10),
+--    (3,"0-2838-9190-4",30),
+--    (9,"0-3432-6145-6",5),
+--    (4,"0-8229-1390-9",12),
+--    (10,"0-6521-1546-2",10),
+--    (4,"0-1188-0050-7",2),
+--    (5,"0-3432-6145-6",45);
+
+-- **************************************************************
+
+-- insert Bookstore_Publisher_Order ******************************************************************
+
+-- insert into Bookstore_Publisher_Order(Publishers_publisher_number, Bookstore_bookstore_id, order_id,confirmation)
+--  values (1,11,1,0),
+--    (1,19,2,1),
+--    (3,11,3,0),
+--    (9,15,4,0),
+--    (4,10,5,1),
+--    (10,16,6,0),
+--    (4,13,7,1),
+--    (5,16,8,1);
+    
+-- **************************************************************
 -- STATUS: Ken updated 6 tables: Book,Book_author,Author,Subject,Book_subject and publisher. 6/16 tables
 -- 10 tables remaining are: Bookstore->inventory -> arrived_books; Book_publisher_order; Branch_book_quantity
 -- 							branches, customers, orders,order_book,special_order
