@@ -20,5 +20,13 @@ WHERE Branch_Book_Quantity.branch_id > 0 AND
 	GROUP BY Books.ISBN;
 
 /* Query 3 */
-
+SELECT Customers.customer_id,Customers.first_name,Customers.last_name,Orders.date,Order_Book.order_id,
+	Order_Book.ISBN,Order_Book.quantity
+FROM Customers LEFT JOIN Special_Order
+	ON Customers.customer_id = Special_Order.customer_id
+    LEFT JOIN Orders 
+		ON Special_Order.order_id = Orders.order_id
+        LEFT JOIN Order_Book
+			ON Orders.order_id = Order_Book.order_id
+WHERE Customers.customer_id = 3;
 
