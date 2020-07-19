@@ -141,6 +141,19 @@
 
 -- **************************************************************
 
+-- insert Bookstore_Publisher_Order ******************************************************************
+
+-- insert into Bookstore_Publisher_Order(Publishers_publisher_number, Bookstore_bookstore_id, order_id,confirmation)
+--  values (1,11,1,0),
+--    (1,19,2,1),
+--    (3,11,3,0),
+--    (9,15,4,0),
+--    (4,10,5,1),
+--    (10,16,6,0),
+--    (4,13,7,1),
+--    (5,16,8,1);
+    
+-- **************************************************************
 -- STATUS: Ken updated 6 tables: Book,Book_author,Author,Subject,Book_subject and publisher. 6/16 tables
 -- 10 tables remaining are: Bookstore->inventory -> arrived_books; Book_publisher_order; Branch_book_quantity
 -- 							branches, customers, orders,order_book,special_order
