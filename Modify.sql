@@ -1,0 +1,11 @@
+USE eyc353_1;
+
+ALTER TABLE Orders
+	DROP ISBN;
+
+ALTER TABLE Orders
+	DROP quantity;
+
+ALTER TABLE Order_Book
+	ADD quantity INT NOT NULL AFTER ISBN;
+    
