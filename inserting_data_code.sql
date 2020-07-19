@@ -158,3 +158,32 @@
 -- 10 tables remaining are: Bookstore->inventory -> arrived_books; Book_publisher_order; Branch_book_quantity
 -- 							branches, customers, orders,order_book,special_order
 
+-- ********************************************************************
+
+-- inserting reader-interest
+
+-- insert into Reader_Interest(order_id,customer_id,ISBN,subject_id,subject)
+-- 	values
+-- 		(14,1,"0-2838-9190-4",1,"science"),
+--         (15,2,"0-8229-1390-9",6,"romance"),
+--         (16,1,"0-2237-3192-7",8,"classic"),
+--         (16,1,"0-2838-9190-4",1,"science"),
+--         (17,3,"0-2710-5457-3",6,"action"),
+--         (17,3,"0-2710-5457-3",7,"adventure"),
+--         (17,3,"0-2710-5457-3",8,"classic"),
+--         (17,3,"0-2710-5457-3",9,"novel"),
+--         (18,4,"0-2710-5457-3",6,"action"),
+--         (18,4,"0-2710-5457-3",7,"adventure"),
+--         (18,4,"0-2710-5457-3",8,"classic"),
+--         (18,4,"0-2710-5457-3",9,"novel"),
+--         (18,4,"0-2838-9190-4",1,"science"),
+--          (22,7,"0-2710-5457-3",6,"action"),
+--         (22,7,"0-2710-5457-3",7,"adventure"),
+--         (22,7,"0-2710-5457-3",8,"classic"),
+--         (22,7,"0-2710-5457-3",9,"novel");
+--         
+        
+        
+        
+	
+
